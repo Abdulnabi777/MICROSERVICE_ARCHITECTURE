@@ -1,0 +1,14 @@
+{% extends "home.html" %}
+
+{% block content %}
+  <h1>Expense Report Graph</h1>
+
+  <!-- Embed the Plotly graph -->
+  <div>
+    {{ plot_div|safe }}
+  </div>
+
+  <!-- Link to go back to the reporting page -->
+  <a href="{% url 'reporting' %}">Back to Reporting</a>
+  
+{% endblock %}

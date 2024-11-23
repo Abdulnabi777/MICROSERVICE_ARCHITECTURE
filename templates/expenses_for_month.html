@@ -1,0 +1,82 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<h1 class="my-4 text-center">Expenses for the Current Month</h1>
+
+<!-- Search Bar for Filtering Expenses -->
+<form method="GET" action="{% url 'expenses_for_month' %}" class="mb-4">
+    <div class="form-group">
+        <label for="search" class="font-weight-bold">Search Expenses</label>
+        <input type="text" id="search" name="search" class="form-control" value="{{ request.GET.search }}" placeholder="Search by User, Expense Name, Location...">
+    </div>
+</form>
+
+<!-- Table to Display Expenses -->
+<table class="table table-bordered table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>User</th>
+            <th>Expense Name</th>
+            <th>Amount</th>
+            <th>Location</th>
+            <th>Expense Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for expense in expenses_for_month %}
+        <tr>
+            <td>{{ expense.user.username }}</td>
+            <td>{{ expense.expense_type }}</td>
+            <td>{{ expense.amount }}</td>
+            <td>{{ expense.location }}</td>
+            <td>{{ expense.created_at|date:"Y-m-d" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No expenses recorded for the current month.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<div class="d-flex justify-content-between">
+    <div>
+        <p>Showing {{ expenses_for_month.paginator.page_range|length }} pages</p>
+    </div>
+    <div>
+        <ul class="pagination">
+            {% if expenses_for_month.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1&search={{ request.GET.search }}" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ expenses_for_month.previous_page_number }}&search={{ request.GET.search }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="page-item active">
+                <span class="page-link">{{ expenses_for_month.number }}</span>
+            </li>
+
+            {% if expenses_for_month.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ expenses_for_month.next_page_number }}&search={{ request.GET.search }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ expenses_for_month.paginator.num_pages }}&search={{ request.GET.search }}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

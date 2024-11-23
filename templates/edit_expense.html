@@ -1,0 +1,36 @@
+{% extends 'home.html' %}
+
+{% block content %}
+  <h1>Details Expenses</h1>
+  
+  <!-- Search box -->
+  <form method="get" action="{% url 'details_expenses' %}">
+    <input type="text" name="q" value="{{ search_query }}" placeholder="Search users or expenses">
+    <button type="submit">Search</button>
+  </form>
+
+  <h2>Users with Expenses</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Total Expenses</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users_with_expenses %}
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.total_expenses }}</td>
+          <td>
+            <!-- View Report Button -->
+            <a href="{% url 'user_report' %}?user_id={{ user.id }}" class="btn btn-primary">View Report</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

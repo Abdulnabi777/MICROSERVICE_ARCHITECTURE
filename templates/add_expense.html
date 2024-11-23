@@ -1,0 +1,10 @@
+{% extends 'home1.html' %}
+
+{% block content %}
+  <h2>Add Expense</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- This will display the form fields -->
+    <button type="submit" class="btn btn-primary">Add Expense</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'home1.html'%}
+{% block content%}
+<form method="get" action="{% url 'user_report' %}">
+    <label for="time_range">Select Time Range:</label>
+    <select name="time_range" id="time_range" onchange="this.form.submit()">
+        <option value="daily" {% if label == 'Daily' %}selected{% endif %}>Daily</option>
+        <option value="weekly" {% if label == 'Weekly' %}selected{% endif %}>Weekly</option>
+        <option value="monthly" {% if label == 'Monthly' %}selected{% endif %}>Monthly</option>
+        <option value="yearly" {% if label == 'Yearly' %}selected{% endif %}>Yearly</option>
+    </select>
+</form>
+
+<div>
+    <!-- Display the plot -->
+    {{ plot_div|safe }}
+</div>
+{% endblock%}

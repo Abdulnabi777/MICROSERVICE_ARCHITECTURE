@@ -1,0 +1,19 @@
+{% extends 'home1.html' %}
+
+{% block content %}
+<h1>Are you sure you want to delete this expense?</h1>
+
+<div>
+    <strong>Expense Type:</strong> {{ expense.expense_type }}<br>
+    <strong>Description:</strong> {{ expense.description }}<br>
+    <strong>Amount:</strong> {{ expense.amount }}<br>
+    <strong>Date:</strong> {{ expense.created_at }}<br>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'view_expenses' %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% endblock %}
